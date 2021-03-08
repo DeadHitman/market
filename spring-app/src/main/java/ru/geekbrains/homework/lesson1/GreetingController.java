@@ -1,4 +1,4 @@
-package com.example.springapp;
+package ru.geekbrains.homework.lesson1;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
