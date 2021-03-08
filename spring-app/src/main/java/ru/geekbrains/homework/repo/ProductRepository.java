@@ -1,10 +1,8 @@
-package ru.geekbrains.homework.lesson2;
+package ru.geekbrains.homework.repo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ru.geekbrains.homework.lesson2.entity.Product;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import ru.geekbrains.homework.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;

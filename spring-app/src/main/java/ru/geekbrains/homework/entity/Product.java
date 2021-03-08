@@ -1,19 +1,17 @@
-package ru.geekbrains.homework.lesson2.entity;
+package ru.geekbrains.homework.entity;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
-
 public class Product implements Serializable {
+
     private static final long serialVersionUID = -3760445487636086034L;
+
     private int id;
+
     private String name;
+
     private float price;
 
 
