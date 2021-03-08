@@ -1,7 +1,9 @@
-package ru.geekbrains.homework.lesson2;
+package ru.geekbrains.homework.entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.geekbrains.homework.lesson2.entity.Product;
+
+import ru.geekbrains.homework.repo.ProductRepository;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Cart {
     @Autowired
     private ProductRepository productRepository;
 
-    private List<Product> cartList;
+    public List<Product> cartList;
 
     public Cart() {
         cartList = new ArrayList<>();
