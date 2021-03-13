@@ -12,6 +12,7 @@ public class SpringAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringAppApplication.class, args);
+
 //        ApplicationContext context = new AnnotationConfigApplicationContext(ProductRepository.class, Cart.class);
 //        ProductRepository productList = context.getBean(ProductRepository.class);
 //        System.out.println(productList.getProductList());
