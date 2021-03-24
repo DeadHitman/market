@@ -2,55 +2,37 @@ package ru.geekbrains.homework.dao;
 
 import org.hibernate.HibernateException;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import ru.geekbrains.homework.config.EntityManager;
 import ru.geekbrains.homework.entity.Product;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Qualifier("ProductDao")
 public class ProductDao {
 
-    EntityManagerFactory factory = new Configuration()
-            .configure("hibernate.xml")
-            .buildSessionFactory();
+    @Autowired
+    EntityManager em =new EntityManager();
 
-    EntityManager em = factory.createEntityManager();
 
-    /**
-     * Создание продукта
-     *
-     * @param name
-     * @param price
-     */
     public void createProduct(String name, int price) {
         Product product = new Product(name, price);
-
-        em.getTransaction().begin();
-        em.persist(product);
-        em.getTransaction().commit();
+        em.getEm().getTransaction().begin();
+        em.getEm().persist(product);
+        em.getEm().getTransaction().commit();
     }
 
-    public void createProduct(int id,String name, int price) {
-        Product product = new Product(name, price);
-
-        em.getTransaction().begin();
-        em.persist(product);
-        em.getTransaction().commit();
-    }
-
-    /**
-     * Поиск по Id
-     * @param id
-     * @return
-     * @throws NoResultException
-     */
-    public Product findById(int id) throws NoResultException {
+    public Product findById(long id) throws NoResultException {
         Product product = null;
-        Query query = em.createQuery("select p from Product p where p.id =:id");
-        query.setParameter("id",id);
+        Query query = em.getEm().createQuery("select p from Product p where p.id =:id");
+        query.setParameter("id", id);
 
         try {
             product = (Product) query.getSingleResult();
@@ -59,62 +41,43 @@ public class ProductDao {
             product = new Product();
         }
         return product;
-
     }
 
-    /**
-     * Поиск всех продуктов
-     * @return
-     * @throws NoResultException
-     */
     public List<Product> findAll() throws NoResultException {
-        List <Product> product = null;
-        Query query = em.createQuery("select p from Product p");
+        List<Product> product = null;
+        Query query = em.getEm().createQuery("select p from Product p");
         try {
             product = query.getResultList();
 
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             product = new ArrayList();
         }
         return product;
-
     }
 
-    /**
-     * Удаление продукта по Id
-     * @param id
-     */
-    public void delteById(int id){
-        Product product = em.find(Product.class,id);
-        em.getTransaction().begin();
-        em.remove(product);
-        em.getTransaction().commit();
+    public void deleteById(Long id) {
+        Product product = em.getEm().find(Product.class, id);
+        em.getEm().getTransaction().begin();
+        em.getEm().remove(product);
+        em.getEm().getTransaction().commit();
     }
 
-    /**
-     * Создание или обновление продукта
-     * @param product
-     * @return
-     */
-    public Product saveOrUpdate(Product product){
-        Product anotherProduct ;
+    public Product saveOrUpdate(Product product) {
+        Product anotherProduct;
         anotherProduct = findById(product.getId());
-        if (!anotherProduct.equals(product)){
-            createProduct(product.getId(),product.getName(),product.getPrice());
+        if (!anotherProduct.equals(product)) {
+            createProduct(product.getTitle(), product.getPrice());
             return product;
-        }
-        else {
-            em.getTransaction().begin();
-            Query query = em.createQuery("update Product p set p.name = :name,p.price = :price  where p.id =:id");
-            query.setParameter("id",product.getId());
-            query.setParameter("name",product.getName());
-            query.setParameter("price",product.getPrice());
+        } else {
+            em.getEm().getTransaction().begin();
+            Query query = em.getEm().createQuery("update Product p set p.title = :title,p.price = :price  where p.id =:id");
+            query.setParameter("id", product.getId());
+            query.setParameter("title", product.getTitle());
+            query.setParameter("price", product.getPrice());
             query.executeUpdate();
-            em.getTransaction().commit();
+            em.getEm().getTransaction().commit();
         }
-
         return product;
-
     }
 
 }

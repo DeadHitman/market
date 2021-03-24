@@ -11,3 +11,4 @@ create unique index product_id_uindex
 alter table shop."Product"
     add constraint product_pk
         primary key (id);
+
