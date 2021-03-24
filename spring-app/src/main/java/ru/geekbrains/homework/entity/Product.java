@@ -1,7 +1,7 @@
 package ru.geekbrains.homework.entity;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Component
 @Table(name = "product", schema = "shop")
 public class Product implements Serializable {
     @Id
@@ -21,8 +20,6 @@ public class Product implements Serializable {
     @Column(name = "price", length = 128)
     private int price;
 
-    @OneToMany(mappedBy = "product")
-    private List<Cart> cartList;
 
     @Override
     public String toString() {
