@@ -11,7 +11,7 @@ public class ProductController {
 
     @GetMapping(value = "/json",produces = "application/json")
     public Product returnProductJson(){
-        Product product = new Product(1,"Product-1",100);
+        Product product = new Product(1L,"Product-1",100);
 
         return product;
 
@@ -19,7 +19,7 @@ public class ProductController {
 
     @GetMapping(value = "/xml",produces = "applicaton/xml")
     public String returnProductXml(){
-        Product product = new Product(5,"Product-3",1000);
+        Product product = new Product(5L,"Product-3",1000);
 
         return product.toString();
 

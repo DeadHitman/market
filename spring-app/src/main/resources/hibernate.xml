@@ -14,5 +14,9 @@
         <property name="hbm2ddl.auto">none</property>
 
         <mapping class="ru.geekbrains.homework.entity.Product"/>
-    </session-factory>
+            <mapping class="ru.geekbrains.homework.entity.Product"/>
+            <mapping class="ru.geekbrains.homework.entity.Customer"/>
+            <mapping class="ru.geekbrains.homework.entity.Cart"/>
+        </session-factory>
+
 </hibernate-configuration>

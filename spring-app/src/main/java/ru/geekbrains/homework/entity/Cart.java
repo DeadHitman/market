@@ -1,55 +1,85 @@
 package ru.geekbrains.homework.entity;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import ru.geekbrains.homework.repo.ProductRepository;
+import javax.persistence.*;
+import java.util.Objects;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
+@Component
+@Table(name = "cart", schema = "shop")
 public class Cart {
 
-    @Autowired
-    private ProductRepository productRepository;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
 
-    public List<Product> cartList;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    public Cart(Long id, Customer customer, Product product) {
+        this.id = id;
+        this.customer = customer;
+        this.product = product;
+    }
+
+    public Cart(Customer customer, Product product) {
+        this.customer = customer;
+        this.product = product;
+    }
 
     public Cart() {
-        cartList = new ArrayList<>();
     }
 
-    public List<Product> getCartList() {
-        return cartList;
+    public Long getId() {
+        return id;
     }
 
-    public Product getCartListById(int id) {
-        Product product = null;
-        for (int i = 0; i < cartList.size(); i++) {
-            if(id == cartList.get(i).getId()){
-                product = cartList.get(i);
-            }
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Product getProduct() {
         return product;
     }
 
-    public void deleteCartListById(int id) {
-        for (int i = 0; i < cartList.size(); i++) {
-            if(id == cartList.get(i).getId()){
-                cartList.remove(i);
-            }
-        }
-    }
-
-    public List<Product> addProductById(int id){
-        cartList.add(productRepository.getProductListById(id));
-        return cartList;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override
     public String toString() {
         return "Cart{" +
-                "productList=" + cartList +
+                "id=" + id +
+                ", customer=" + customer +
+                ", product=" + product +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cart)) return false;
+        Cart cart = (Cart) o;
+        return Objects.equals(id, cart.id) && Objects.equals(customer, cart.customer) && Objects.equals(product, cart.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, customer, product);
     }
 }
