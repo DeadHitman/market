@@ -15,11 +15,11 @@ public class Cart {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
