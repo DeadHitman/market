@@ -19,8 +19,15 @@
         <td th:text="${product.id}" align="center"/>
         <td th:text="${product.title}" align="center"/>
         <td th:text="${product.price}" align="center"/>
+        <!--        <td><a th:href="@{/products/edit/{id}(id=${product.id})}">Изменить</a></td>-->
         <td>
-            <form th:action="@{products/delete}" th:method="delete">
+            <form th:action="@{/products/edit/{id}(id=${product.id})}" th:method="get">
+                <input type="hidden" name="id" th:value="${product.id}"/>
+                <button type="submit">Изменить</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/products/delete}" th:method="delete">
                 <input type="hidden" name="id" th:value="${product.id}"/>
                 <button type="submit">Удалить</button>
             </form>
@@ -28,5 +35,8 @@
     </tr>
     </tbody>
 </table>
+<form th:action="@{/products/add}" th:method="get">
+    <button type="submit">Создать продукт</button>
+</form>
 </body>
 </html>
